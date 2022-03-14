@@ -1,0 +1,34 @@
+version: "3.6"
+services:
+    mail-rest-api:
+        environment:
+            - FLUX_MAIL_API_MAIL_HOST=...
+            - FLUX_MAIL_API_MAIL_PORT=993
+            - FLUX_MAIL_API_MAIL_TYPE=imap
+            - FLUX_MAIL_API_MAIL_USER_NAME_FILE=/run/secrets/imap_user
+            - FLUX_MAIL_API_MAIL_PASSWORD_FILE=/run/secrets/imap_password
+            - FLUX_MAIL_API_MAIL_ENCRYPTION_TYPE=tls-auto
+            - FLUX_MAIL_API_MAIL_MARK_AS_READ=false
+            - FLUX_MAIL_API_SMTP_HOST=smtp
+            - FLUX_MAIL_API_SMTP_PORT=1025
+            - FLUX_MAIL_API_SMTP_FROM=from@test.local
+            - FLUX_MAIL_API_SMTP_FROM_NAME=Test From User
+        image: docker-registry.fluxpublisher.ch/flux-mail/rest-api:latest
+        ports:
+            - [%host_ip%:]9501:9501
+        secrets:
+            - imap_user
+            - imap_password
+    smtp:
+        image: mailhog/mailhog:latest
+        ports:
+            - [%host_ip%:]8025:8025
+    other-service:
+        environment:
+            [- FLUX_MAIL_REST_API_HOST=mail-rest-api]
+            [- FLUX_MAIL_REST_API_PORT=9501]
+secrets:
+    imap_user:
+        file: ./data/secrets/imap_user
+    imap_password:
+        file: ./data/secrets/imap_password

@@ -1,0 +1,16 @@
+{
+    "description": "Mail Rest Api for fetch or send mails",
+    "topics": [
+        "api",
+        "docker",
+        "fetch",
+        "imap",
+        "mail",
+        "mails",
+        "php",
+        "rest",
+        "send",
+        "smtp"
+    ],
+    "homepage": "https://github.com/fluxapps/flux-mail-rest-api"
+}

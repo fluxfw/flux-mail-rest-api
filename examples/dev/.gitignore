@@ -1,0 +1,6 @@
+*
+!.gitignore
+!docker-compose.yaml
+!fetch.sh
+!send.sh
+!send-output.sh
