@@ -53,6 +53,6 @@ USER www-data:www-data
 
 EXPOSE 9501
 
-ENTRYPOINT ["/flux-mail-rest-api/bin/docker-entrypoint.php"]
+ENTRYPOINT ["/flux-mail-rest-api/bin/server.php"]
 
 COPY --from=build /flux-mail-rest-api /flux-mail-rest-api
