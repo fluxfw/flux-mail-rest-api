@@ -2,11 +2,11 @@
 
 namespace FluxMailRestApi\Adapter\Route;
 
-use FluxMailRestApi\Libs\FluxMailApi\Adapter\Api\AddressDto;
-use FluxMailRestApi\Libs\FluxMailApi\Adapter\Api\AttachmentDataEncoding;
-use FluxMailRestApi\Libs\FluxMailApi\Adapter\Api\AttachmentDto;
+use FluxMailRestApi\Libs\FluxMailApi\Adapter\Address\AddressDto;
 use FluxMailRestApi\Libs\FluxMailApi\Adapter\Api\MailApi;
-use FluxMailRestApi\Libs\FluxMailApi\Adapter\Api\MailDto;
+use FluxMailRestApi\Libs\FluxMailApi\Adapter\Attachment\AttachmentDataEncoding;
+use FluxMailRestApi\Libs\FluxMailApi\Adapter\Attachment\AttachmentDto;
+use FluxMailRestApi\Libs\FluxMailApi\Adapter\Mail\MailDto;
 use FluxMailRestApi\Libs\FluxRestApi\Body\JsonBodyDto;
 use FluxMailRestApi\Libs\FluxRestApi\Body\TextBodyDto;
 use FluxMailRestApi\Libs\FluxRestApi\Libs\FluxRestBaseApi\Body\DefaultBodyType;
