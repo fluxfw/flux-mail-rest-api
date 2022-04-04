@@ -37,7 +37,7 @@ COPY . /flux-mail-rest-api
 FROM $PHP_CLI_IMAGE
 ARG SWOOLE_SOURCE_URL
 
-LABEL org.opencontainers.image.source="https://github.com/flux-eco/flux-mail-rest-api"
+LABEL org.opencontainers.image.source="https://github.com/flux-caps/flux-mail-rest-api"
 LABEL maintainer="fluxlabs <support@fluxlabs.ch> (https://fluxlabs.ch)"
 
 RUN apk add --no-cache imap-dev libstdc++ && \
