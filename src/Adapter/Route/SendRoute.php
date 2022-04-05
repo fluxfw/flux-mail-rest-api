@@ -7,15 +7,15 @@ use FluxMailRestApi\Libs\FluxMailApi\Adapter\Api\MailApi;
 use FluxMailRestApi\Libs\FluxMailApi\Adapter\Attachment\AttachmentDataEncoding;
 use FluxMailRestApi\Libs\FluxMailApi\Adapter\Attachment\AttachmentDto;
 use FluxMailRestApi\Libs\FluxMailApi\Adapter\Mail\MailDto;
+use FluxMailRestApi\Libs\FluxRestApi\Body\DefaultBodyType;
 use FluxMailRestApi\Libs\FluxRestApi\Body\JsonBodyDto;
 use FluxMailRestApi\Libs\FluxRestApi\Body\TextBodyDto;
-use FluxMailRestApi\Libs\FluxRestApi\Libs\FluxRestBaseApi\Body\DefaultBodyType;
-use FluxMailRestApi\Libs\FluxRestApi\Libs\FluxRestBaseApi\Method\DefaultMethod;
-use FluxMailRestApi\Libs\FluxRestApi\Libs\FluxRestBaseApi\Method\Method;
-use FluxMailRestApi\Libs\FluxRestApi\Libs\FluxRestBaseApi\Status\DefaultStatus;
+use FluxMailRestApi\Libs\FluxRestApi\Method\DefaultMethod;
+use FluxMailRestApi\Libs\FluxRestApi\Method\Method;
 use FluxMailRestApi\Libs\FluxRestApi\Request\RequestDto;
 use FluxMailRestApi\Libs\FluxRestApi\Response\ResponseDto;
 use FluxMailRestApi\Libs\FluxRestApi\Route\Route;
+use FluxMailRestApi\Libs\FluxRestApi\Status\DefaultStatus;
 
 class SendRoute implements Route
 {
