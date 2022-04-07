@@ -3,12 +3,12 @@
 namespace FluxMailRestApi\Adapter\Route;
 
 use FluxMailRestApi\Libs\FluxMailApi\Adapter\Api\MailApi;
-use FluxMailRestApi\Libs\FluxRestApi\Body\JsonBodyDto;
-use FluxMailRestApi\Libs\FluxRestApi\Method\DefaultMethod;
-use FluxMailRestApi\Libs\FluxRestApi\Method\Method;
-use FluxMailRestApi\Libs\FluxRestApi\Request\RequestDto;
-use FluxMailRestApi\Libs\FluxRestApi\Response\ResponseDto;
-use FluxMailRestApi\Libs\FluxRestApi\Route\Route;
+use FluxMailRestApi\Libs\FluxRestApi\Adapter\Body\JsonBodyDto;
+use FluxMailRestApi\Libs\FluxRestApi\Adapter\Method\DefaultMethod;
+use FluxMailRestApi\Libs\FluxRestApi\Adapter\Method\Method;
+use FluxMailRestApi\Libs\FluxRestApi\Adapter\Route\Route;
+use FluxMailRestApi\Libs\FluxRestApi\Adapter\Server\ServerRequestDto;
+use FluxMailRestApi\Libs\FluxRestApi\Adapter\Server\ServerResponseDto;
 
 class FetchRoute implements Route
 {
@@ -53,9 +53,9 @@ class FetchRoute implements Route
     }
 
 
-    public function handle(RequestDto $request) : ?ResponseDto
+    public function handle(ServerRequestDto $request) : ?ServerResponseDto
     {
-        return ResponseDto::new(
+        return ServerResponseDto::new(
             JsonBodyDto::new(
                 $this->mail_api->fetch()
             )

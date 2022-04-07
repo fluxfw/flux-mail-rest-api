@@ -7,15 +7,15 @@ use FluxMailRestApi\Libs\FluxMailApi\Adapter\Api\MailApi;
 use FluxMailRestApi\Libs\FluxMailApi\Adapter\Attachment\AttachmentDataEncoding;
 use FluxMailRestApi\Libs\FluxMailApi\Adapter\Attachment\AttachmentDto;
 use FluxMailRestApi\Libs\FluxMailApi\Adapter\Mail\MailDto;
-use FluxMailRestApi\Libs\FluxRestApi\Body\DefaultBodyType;
-use FluxMailRestApi\Libs\FluxRestApi\Body\JsonBodyDto;
-use FluxMailRestApi\Libs\FluxRestApi\Body\TextBodyDto;
-use FluxMailRestApi\Libs\FluxRestApi\Method\DefaultMethod;
-use FluxMailRestApi\Libs\FluxRestApi\Method\Method;
-use FluxMailRestApi\Libs\FluxRestApi\Request\RequestDto;
-use FluxMailRestApi\Libs\FluxRestApi\Response\ResponseDto;
-use FluxMailRestApi\Libs\FluxRestApi\Route\Route;
-use FluxMailRestApi\Libs\FluxRestApi\Status\DefaultStatus;
+use FluxMailRestApi\Libs\FluxRestApi\Adapter\Body\JsonBodyDto;
+use FluxMailRestApi\Libs\FluxRestApi\Adapter\Body\TextBodyDto;
+use FluxMailRestApi\Libs\FluxRestApi\Adapter\Body\Type\DefaultBodyType;
+use FluxMailRestApi\Libs\FluxRestApi\Adapter\Method\DefaultMethod;
+use FluxMailRestApi\Libs\FluxRestApi\Adapter\Method\Method;
+use FluxMailRestApi\Libs\FluxRestApi\Adapter\Route\Route;
+use FluxMailRestApi\Libs\FluxRestApi\Adapter\Server\ServerRequestDto;
+use FluxMailRestApi\Libs\FluxRestApi\Adapter\Server\ServerResponseDto;
+use FluxMailRestApi\Libs\FluxRestApi\Adapter\Status\DefaultStatus;
 
 class SendRoute implements Route
 {
@@ -62,10 +62,10 @@ class SendRoute implements Route
     }
 
 
-    public function handle(RequestDto $request) : ?ResponseDto
+    public function handle(ServerRequestDto $request) : ?ServerResponseDto
     {
         if (!($request->getParsedBody() instanceof JsonBodyDto)) {
-            return ResponseDto::new(
+            return ServerResponseDto::new(
                 TextBodyDto::new(
                     "No json body"
                 ),
