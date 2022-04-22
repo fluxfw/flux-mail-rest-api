@@ -1,7 +1,7 @@
 stages:
     - build
-    - repository
     - publish
+    - repository
 
 default:
     image: docker:latest
@@ -22,16 +22,6 @@ build:
         - branches
         - tags
 
-flux-publish-utils:
-    stage: repository
-    image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-publish-utils:latest
-    before_script: [ ]
-    script:
-        - "false"
-    after_script: [ ]
-    only:
-        - main
-
 publish:
     stage: publish
     script:
@@ -41,3 +31,13 @@ publish:
     only:
         - main
         - tags
+
+flux-publish-utils:
+    stage: repository
+    image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-publish-utils:latest
+    before_script: [ ]
+    script:
+        - "false"
+    after_script: [ ]
+    only:
+        - main
