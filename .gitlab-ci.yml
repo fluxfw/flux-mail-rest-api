@@ -1,36 +1,43 @@
+stages:
+    - build
+    - repository
+    - publish
+
+default:
+    image: docker:latest
+    before_script:
+        - DOCKER_TAG=${CI_COMMIT_REF_NAME/main/latest}
+        - echo -n $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+        - if [ -n "$DOCKER_REGISTRY_URL" ]; then echo -n $DOCKER_REGISTRY_PASSWORD | docker login -u $DOCKER_REGISTRY_USER --password-stdin $DOCKER_REGISTRY_URL; fi
+    after_script:
+        - docker logout $CI_REGISTRY
+        - if [ -n "$DOCKER_REGISTRY_URL" ]; then docker logout $DOCKER_REGISTRY_URL; fi
+
 build:
     stage: build
-    image: docker:stable
     script:
-        - echo -n $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY;
-          docker build . --pull --build-arg FLUX_AUTOLOAD_API_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-autoload-api:latest --build-arg FLUX_MAIL_API=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-mail-api:latest --build-arg FLUX_NAMESPACE_CHANGER_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-namespace-changer:latest --build-arg FLUX_REST_API_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-rest-api:latest -t $CI_REGISTRY_IMAGE:latest;
-          docker push $CI_REGISTRY_IMAGE:latest;
-          docker logout $CI_REGISTRY;
+        - docker build . --pull --build-arg COMMIT_SHA=$CI_COMMIT_SHA --build-arg FLUX_AUTOLOAD_API_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-autoload-api --build-arg FLUX_MAIL_API=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-mail-api --build-arg FLUX_NAMESPACE_CHANGER_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-namespace-changer --build-arg FLUX_REST_API_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-rest-api -t $CI_REGISTRY_IMAGE:$DOCKER_TAG
+        - docker push $CI_REGISTRY_IMAGE:$DOCKER_TAG
     only:
-        - develop
+        - branches
+        - tags
 
 flux-publish-utils:
-    stage: build
+    stage: repository
     image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-publish-utils:latest
+    before_script: [ ]
     script:
         - "false"
+    after_script: [ ]
     only:
         - main
 
 publish:
-    stage: deploy
-    image: docker:stable
+    stage: publish
     script:
-        - echo -n $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY;
-          docker pull $CI_REGISTRY_IMAGE:latest;
-          docker logout $CI_REGISTRY;
-        - echo -n $DEV_DOCKER_REGISTRY_PASSWORD | docker login -u $DEV_DOCKER_REGISTRY_USER --password-stdin $DEV_DOCKER_REGISTRY_URL;
-          docker tag $CI_REGISTRY_IMAGE:latest $DEV_DOCKER_REGISTRY_URL/flux-mail/rest-api:latest;
-          docker push $DEV_DOCKER_REGISTRY_URL/flux-mail/rest-api:latest;
-          docker logout $DEV_DOCKER_REGISTRY_URL;
-        - echo -n $DOCKER_REGISTRY_PASSWORD | docker login -u $DOCKER_REGISTRY_USER --password-stdin $DOCKER_REGISTRY_URL;
-          docker tag $DEV_DOCKER_REGISTRY_URL/flux-mail/rest-api:latest $DOCKER_REGISTRY_URL/flux-mail/rest-api:latest;
-          docker push $DOCKER_REGISTRY_URL/flux-mail/rest-api:latest;
-          docker logout $DOCKER_REGISTRY_URL;
+        - docker pull $CI_REGISTRY_IMAGE:$DOCKER_TAG
+        - docker tag $CI_REGISTRY_IMAGE:$DOCKER_TAG $DOCKER_REGISTRY_URL/flux-mail/rest-api:$DOCKER_TAG
+        - docker push $DOCKER_REGISTRY_URL/flux-mail/rest-api:$DOCKER_TAG
     only:
         - main
+        - tags
