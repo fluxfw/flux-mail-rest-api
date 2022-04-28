@@ -6,13 +6,17 @@ stages:
 
 default:
     image: docker:latest
-    before_script:
-        - DOCKER_TAG=${CI_COMMIT_REF_NAME/main/latest}
-        - echo -n $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
-        - if [ -n "$DOCKER_REGISTRY_URL" ]; then echo -n $DOCKER_REGISTRY_PASSWORD | docker login -u $DOCKER_REGISTRY_USER --password-stdin $DOCKER_REGISTRY_URL; fi
-    after_script:
-        - docker logout $CI_REGISTRY
-        - if [ -n "$DOCKER_REGISTRY_URL" ]; then docker logout $DOCKER_REGISTRY_URL; fi
+    before_script: |
+        DOCKER_TAG=${CI_COMMIT_REF_NAME/main/latest}
+        if [ ! -z `command -v docker` ]; then
+            echo -n $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+            if [ -n "$DOCKER_REGISTRY_URL" ]; then echo -n $DOCKER_REGISTRY_PASSWORD | docker login -u $DOCKER_REGISTRY_USER --password-stdin $DOCKER_REGISTRY_URL; fi
+        fi
+    after_script: |
+        if [ ! -z `command -v docker` ]; then
+            docker logout $CI_REGISTRY
+            if [ -n "$DOCKER_REGISTRY_URL" ]; then docker logout $DOCKER_REGISTRY_URL; fi
+        fi
 
 build:
     stage: build
@@ -48,9 +52,7 @@ publish:
 flux-publish-utils:
     stage: repository
     image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-publish-utils:latest
-    before_script: [ ]
     script:
-        - "false"
-    after_script: [ ]
+        - publish-utils
     only:
         - main
