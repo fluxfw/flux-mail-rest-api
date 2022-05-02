@@ -7,7 +7,7 @@ stages:
 default:
     image: docker:latest
     before_script: |
-        DOCKER_TAG=${CI_COMMIT_REF_NAME/main/latest}
+        DOCKER_IMAGE_TAG=${CI_COMMIT_REF_NAME/main/latest}
         if [ ! -z `command -v docker` ]; then
             echo -n $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
             if [ -n "$DOCKER_REGISTRY_URL" ]; then echo -n $DOCKER_REGISTRY_PASSWORD | docker login -u $DOCKER_REGISTRY_USER --password-stdin $DOCKER_REGISTRY_URL; fi
@@ -21,8 +21,8 @@ default:
 build:
     stage: build
     script:
-        - docker build . --pull --build-arg COMMIT_SHA=$CI_COMMIT_SHA --build-arg FLUX_AUTOLOAD_API_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-autoload-api --build-arg FLUX_MAIL_API=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-mail-api --build-arg FLUX_NAMESPACE_CHANGER_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-namespace-changer --build-arg FLUX_REST_API_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-rest-api -t $CI_REGISTRY_IMAGE:$DOCKER_TAG
-        - docker push $CI_REGISTRY_IMAGE:$DOCKER_TAG
+        - docker build . --pull --build-arg COMMIT_SHA=$CI_COMMIT_SHA --build-arg FLUX_AUTOLOAD_API_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-autoload-api --build-arg FLUX_MAIL_API=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-mail-api --build-arg FLUX_NAMESPACE_CHANGER_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-namespace-changer --build-arg FLUX_REST_API_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-rest-api -t $CI_REGISTRY_IMAGE:$DOCKER_IMAGE_TAG
+        - docker push $CI_REGISTRY_IMAGE:$DOCKER_IMAGE_TAG
     only:
         - branches
         - tags
@@ -31,7 +31,7 @@ create-gitlab-artifact-from-build:
     stage: build-artifact
     image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-docker-gitlab-build-artifact:latest
     script:
-        - create-gitlab-artifact-from-docker-build $CI_REGISTRY_IMAGE:$DOCKER_TAG /$CI_PROJECT_NAME $CI_PROJECT_NAME-build.tar.gz
+        - create-gitlab-artifact-from-docker-build $CI_REGISTRY_IMAGE:$DOCKER_IMAGE_TAG /$CI_PROJECT_NAME $CI_PROJECT_NAME-build.tar.gz
     artifacts:
         paths:
             - $CI_PROJECT_NAME-build.tar.gz
@@ -42,9 +42,9 @@ create-gitlab-artifact-from-build:
 publish:
     stage: publish
     script:
-        - docker pull $CI_REGISTRY_IMAGE:$DOCKER_TAG
-        - docker tag $CI_REGISTRY_IMAGE:$DOCKER_TAG $DOCKER_REGISTRY_URL/flux-mail/rest-api:$DOCKER_TAG
-        - docker push $DOCKER_REGISTRY_URL/flux-mail/rest-api:$DOCKER_TAG
+        - docker pull $CI_REGISTRY_IMAGE:$DOCKER_IMAGE_TAG
+        - docker tag $CI_REGISTRY_IMAGE:$DOCKER_IMAGE_TAG $DOCKER_REGISTRY_URL/flux-mail/rest-api:$DOCKER_IMAGE_TAG
+        - docker push $DOCKER_REGISTRY_URL/flux-mail/rest-api:$DOCKER_IMAGE_TAG
     only:
         - main
         - tags
