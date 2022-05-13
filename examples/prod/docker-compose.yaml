@@ -22,6 +22,8 @@ services:
             - smtp_user
             - smtp_password
     other-service:
+        depends_on:
+            - mail-rest-api
         environment:
             [- FLUX_MAIL_REST_API_HOST=mail-rest-api]
             [- FLUX_MAIL_REST_API_PORT=9501]
