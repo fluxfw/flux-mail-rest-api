@@ -12,6 +12,9 @@ use FluxMailRestApi\Libs\FluxRestApi\Adapter\Body\TextBodyDto;
 use FluxMailRestApi\Libs\FluxRestApi\Adapter\Body\Type\DefaultBodyType;
 use FluxMailRestApi\Libs\FluxRestApi\Adapter\Method\DefaultMethod;
 use FluxMailRestApi\Libs\FluxRestApi\Adapter\Method\Method;
+use FluxMailRestApi\Libs\FluxRestApi\Adapter\Route\Documentation\RouteContentTypeDocumentationDto;
+use FluxMailRestApi\Libs\FluxRestApi\Adapter\Route\Documentation\RouteDocumentationDto;
+use FluxMailRestApi\Libs\FluxRestApi\Adapter\Route\Documentation\RouteResponseDocumentationDto;
 use FluxMailRestApi\Libs\FluxRestApi\Adapter\Route\Route;
 use FluxMailRestApi\Libs\FluxRestApi\Adapter\Server\ServerRequestDto;
 use FluxMailRestApi\Libs\FluxRestApi\Adapter\Server\ServerResponseDto;
@@ -36,17 +39,32 @@ class SendRoute implements Route
     }
 
 
-    public function getDocuRequestBodyTypes() : ?array
+    public function getDocumentation() : ?RouteDocumentationDto
     {
-        return [
-            DefaultBodyType::JSON
-        ];
-    }
-
-
-    public function getDocuRequestQueryParams() : ?array
-    {
-        return null;
+        return RouteDocumentationDto::new(
+            $this->getRoute(),
+            $this->getMethod(),
+            "Send email",
+            null,
+            null,
+            null,
+            [
+                RouteContentTypeDocumentationDto::new(
+                    DefaultBodyType::JSON,
+                    MailDto::class,
+                    "Mail"
+                )
+            ],
+            [
+                RouteResponseDocumentationDto::new(),
+                RouteResponseDocumentationDto::new(
+                    DefaultBodyType::TEXT,
+                    DefaultStatus::_400,
+                    null,
+                    "No json body"
+                )
+            ]
+        );
     }
 
 
