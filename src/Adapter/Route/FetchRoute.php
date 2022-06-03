@@ -13,7 +13,6 @@ use FluxMailRestApi\Libs\FluxRestApi\Adapter\Route\Documentation\RouteResponseDo
 use FluxMailRestApi\Libs\FluxRestApi\Adapter\Route\Route;
 use FluxMailRestApi\Libs\FluxRestApi\Adapter\Server\ServerRequestDto;
 use FluxMailRestApi\Libs\FluxRestApi\Adapter\Server\ServerResponseDto;
-use FluxMailRestApi\Libs\FluxRestApi\Adapter\Status\DefaultStatus;
 
 class FetchRoute implements Route
 {
