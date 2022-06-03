@@ -52,7 +52,7 @@ class SendRoute implements Route
                 RouteContentTypeDocumentationDto::new(
                     DefaultBodyType::JSON,
                     MailDto::class,
-                    "Mail"
+                    "Email"
                 )
             ],
             [

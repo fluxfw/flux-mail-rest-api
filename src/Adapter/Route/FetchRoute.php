@@ -49,13 +49,7 @@ class FetchRoute implements Route
                     DefaultBodyType::JSON,
                     null,
                     MailDto::class . "[]",
-                    "Mails"
-                ),
-                RouteResponseDocumentationDto::new(
-                    DefaultBodyType::TEXT,
-                    DefaultStatus::_400,
-                    null,
-                    "No json body"
+                    "Emails"
                 )
             ]
         );
