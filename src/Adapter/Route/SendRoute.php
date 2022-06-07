@@ -82,7 +82,7 @@ class SendRoute implements Route
 
     public function handle(ServerRequestDto $request) : ?ServerResponseDto
     {
-        if (!($request->getParsedBody() instanceof JsonBodyDto)) {
+        if (!($request->parsed_body instanceof JsonBodyDto)) {
             return ServerResponseDto::new(
                 TextBodyDto::new(
                     "No json body"
@@ -93,34 +93,34 @@ class SendRoute implements Route
 
         $this->mail_api->send(
             MailDto::new(
-                $request->getParsedBody()->getData()->subject,
-                $request->getParsedBody()->getData()->body_html,
+                $request->parsed_body->data->subject,
+                $request->parsed_body->data->body_html,
                 array_map(fn(object $address) : AddressDto => AddressDto::new(
                     $address->email,
                     $address->name ?? null
-                ), $request->getParsedBody()->getData()->to ?? []),
+                ), $request->parsed_body->data->to ?? []),
                 array_map(fn(object $attachment) : AttachmentDto => AttachmentDto::new(
                     $attachment->name,
                     $attachment->data,
                     ($data_encoding = $attachment->data_encoding ?? null) !== null ? AttachmentDataEncoding::from($data_encoding) : null,
                     $attachment->data_type ?? null
-                ), $request->getParsedBody()->getData()->attachments ?? []),
+                ), $request->parsed_body->data->attachments ?? []),
                 array_map(fn(object $address) : AddressDto => AddressDto::new(
                     $address->email,
                     $address->name ?? null
-                ), $request->getParsedBody()->getData()->reply_to ?? []),
+                ), $request->parsed_body->data->reply_to ?? []),
                 array_map(fn(object $address) : AddressDto => AddressDto::new(
                     $address->email,
                     $address->name ?? null
-                ), $request->getParsedBody()->getData()->cc ?? []),
+                ), $request->parsed_body->data->cc ?? []),
                 array_map(fn(object $address) : AddressDto => AddressDto::new(
                     $address->email,
                     $address->name ?? null
-                ), $request->getParsedBody()->getData()->bbc ?? []),
+                ), $request->parsed_body->data->bbc ?? []),
                 null,
                 null,
                 null,
-                $request->getParsedBody()->getData()->body_text ?? null
+                $request->parsed_body->data->body_text ?? null
             )
         );
 
