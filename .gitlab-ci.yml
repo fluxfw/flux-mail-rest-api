@@ -31,7 +31,7 @@ create-gitlab-artifact-from-build:
     stage: build-artifact
     image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-docker-gitlab-build-artifact:latest
     script:
-        - create-gitlab-artifact-from-docker-build $CI_REGISTRY_IMAGE:$DOCKER_IMAGE_TAG /$CI_PROJECT_NAME $CI_PROJECT_NAME-build.tar.gz
+        - create-gitlab-artifact-from-docker-build $CI_REGISTRY_IMAGE:$DOCKER_IMAGE_TAG /$CI_PROJECT_NAME.tar.gz $CI_PROJECT_NAME-build.tar.gz
     artifacts:
         paths:
             - $CI_PROJECT_NAME-build.tar.gz
