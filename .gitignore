@@ -9,6 +9,7 @@
 !.gitignore
 !.gitlab-ci.yml
 !autoload.php
+!CHANGELOG.md
 !Dockerfile
 !metadata.json
 !README.md
