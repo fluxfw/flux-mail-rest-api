@@ -5,6 +5,7 @@
 Changes:
 
 - Locked flux-namespace-changer version
+- Remove create-gitlab-artifact-from-build
 
 Get build:
 
