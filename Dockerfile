@@ -5,7 +5,7 @@ ARG FLUX_REST_API_IMAGE=docker-registry.fluxpublisher.ch/flux-rest-api
 
 FROM $FLUX_AUTOLOAD_API_IMAGE:v2022-06-22-1 AS flux_autoload_api
 FROM $FLUX_MAIL_API_IMAGE:v2022-07-05-1 AS flux_mail_api
-FROM $FLUX_REST_API_IMAGE:v2022-06-29-1 AS flux_rest_api
+FROM $FLUX_REST_API_IMAGE:v2022-06-29-2 AS flux_rest_api
 
 FROM $FLUX_NAMESPACE_CHANGER_IMAGE:v2022-06-23-1 AS build_namespaces
 
