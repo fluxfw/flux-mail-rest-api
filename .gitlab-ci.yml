@@ -1,6 +1,7 @@
 stages:
     - build
     - publish
+    - build-artifact
     - repository
 
 default:
@@ -36,10 +37,23 @@ publish:
         - main
         - tags
 
+create-gitlab-artifact-from-build:
+    stage: build-artifact
+    image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-docker-gitlab-build-artifact:latest
+    script:
+        - create-gitlab-artifact-from-docker-build $CI_REGISTRY_IMAGE:$DOCKER_IMAGE_TAG /$CI_PROJECT_NAME.tar.gz build.tar.gz
+    artifacts:
+        paths:
+            - build.tar.gz
+        expire_in: 5 minutes
+    only:
+        - /^v[0-9-]+$/
+
 flux-publish-utils:
     stage: repository
     image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-publish-utils:latest
     script:
-        - publish-utils
+        - if [ -n "$CI_COMMIT_TAG" ]; then upload-release-asset build.tar.gz $CI_PROJECT_NAME-$DOCKER_IMAGE_TAG-build.tar.gz; else publish-utils; fi
     only:
         - main
+        - /^v[0-9-]+$/

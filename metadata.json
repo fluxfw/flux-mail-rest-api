@@ -1,5 +1,5 @@
 {
-    "version": "2022-07-05-1",
+    "version": "2022-07-07-1",
     "description": "Mail Rest Api for fetch or send mails",
     "topics": [
         "api",
