@@ -21,7 +21,7 @@ default:
 build:
     stage: build
     script:
-        - docker build . --pull --build-arg COMMIT_SHA=$CI_COMMIT_SHA --build-arg FLUX_AUTOLOAD_API_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-autoload-api --build-arg FLUX_MAIL_API=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-mail-api --build-arg FLUX_NAMESPACE_CHANGER_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-namespace-changer --build-arg FLUX_REST_API_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-rest-api -t $CI_REGISTRY_IMAGE:$DOCKER_IMAGE_TAG
+        - docker build . --pull --build-arg COMMIT_SHA=$CI_COMMIT_SHA --build-arg FLUX_AUTOLOAD_API_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-autoload-api --build-arg FLUX_MAIL_API_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-mail-api --build-arg FLUX_NAMESPACE_CHANGER_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-namespace-changer --build-arg FLUX_REST_API_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-rest-api -t $CI_REGISTRY_IMAGE:$DOCKER_IMAGE_TAG
         - docker push $CI_REGISTRY_IMAGE:$DOCKER_IMAGE_TAG
     only:
         - branches
