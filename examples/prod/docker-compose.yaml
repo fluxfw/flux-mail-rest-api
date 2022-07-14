@@ -14,7 +14,7 @@ services:
             - FLUX_MAIL_API_SMTP_PASSWORD_FILE=/run/secrets/smtp_password
             - FLUX_MAIL_API_SMTP_FROM=...
             - FLUX_MAIL_API_SMTP_FROM_NAME=...
-        image: docker-registry.fluxpublisher.ch/flux-mail-rest-api:latest
+        image: fluxfw/flux-mail-rest-api:latest
         restart: always
         secrets:
             - imap_user
