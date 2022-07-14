@@ -4,7 +4,7 @@ Mail Rest Api for fetch or send mails
 
 ## Environment variables
 
-First look at [flux-mail-api](https://github.com/flux-eco/flux-mail-api#environment-variables)
+First look at [flux-mail-api](https://github.com/fluxfw/flux-mail-api#environment-variables)
 
 | Variable | Description | Default value |
 | -------- | ----------- | ------------- |
