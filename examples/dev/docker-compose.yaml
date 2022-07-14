@@ -18,7 +18,7 @@ services:
             - FLUX_MAIL_API_SMTP_PORT=1025
             - FLUX_MAIL_API_SMTP_FROM=from@test.local
             - FLUX_MAIL_API_SMTP_FROM_NAME=Test From User
-        image: docker-registry.fluxpublisher.ch/flux-mail-rest-api:latest
+        image: fluxfw/flux-mail-rest-api:latest
         ports:
             - [%host_ip%:]9501:9501
         secrets:
