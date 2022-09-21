@@ -39,13 +39,9 @@ publish:
 
 build-artifact:
     stage: build-artifact
+    image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-docker-gitlab-build-artifact:latest
     script:
-        - (if [ ! -d flux-docker-gitlab-build-artifact ]; then mkdir -p flux-docker-gitlab-build-artifact && cd flux-docker-gitlab-build-artifact && wget -O - https://github.com/fluxfw/flux-docker-gitlab-build-artifact/releases/download/v2022-07-12-1/flux-docker-gitlab-build-artifact-v2022-07-12-1-build.tar.gz | tar -xz --strip-components=1; fi)
-        - flux-docker-gitlab-build-artifact/bin/create-gitlab-artifact-from-docker-build.sh $CI_REGISTRY_IMAGE:$DOCKER_IMAGE_TAG /$CI_PROJECT_NAME build.tar.gz
-    cache:
-        key: build-artifact
-        paths:
-            - flux-docker-gitlab-build-artifact
+        - create-gitlab-artifact-from-docker-build $CI_REGISTRY_IMAGE:$DOCKER_IMAGE_TAG /$CI_PROJECT_NAME build.tar.gz
     artifacts:
         paths:
             - build.tar.gz
@@ -55,14 +51,9 @@ build-artifact:
 
 publish-utils:
     stage: publish-utils
-    image: php:cli-alpine
+    image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/flux-publish-utils:latest
     script:
-        - (if [ ! -d flux-publish-utils ]; then mkdir -p flux-publish-utils && cd flux-publish-utils && wget -O - https://github.com/fluxfw/flux-publish-utils/releases/download/v2022-07-12-1/flux-publish-utils-v2022-07-12-1-build.tar.gz | tar -xz --strip-components=1; fi)
-        - if [ -n "$CI_COMMIT_TAG" ]; then flux-publish-utils/bin/upload-release-asset.php build.tar.gz $CI_PROJECT_NAME-$DOCKER_IMAGE_TAG-build.tar.gz; else flux-publish-utils/bin/publish-utils.php; fi
-    cache:
-        key: publish-utils
-        paths:
-            - flux-publish-utils
+        - if [ -n "$CI_COMMIT_TAG" ]; then upload-release-asset build.tar.gz $CI_PROJECT_NAME-$DOCKER_IMAGE_TAG-build.tar.gz; else publish-utils; fi
     only:
         - main
         - /^v[0-9-]+$/
