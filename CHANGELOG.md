@@ -6,6 +6,12 @@ Changes:
 
 \-
 
+## v2022-12-12-1
+
+Changes:
+
+- PHP 8.2
+
 ## v2022-07-12-1
 
 Changes:
