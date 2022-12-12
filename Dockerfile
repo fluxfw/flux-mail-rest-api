@@ -1,18 +1,16 @@
-FROM php:8.1-cli-alpine AS build
+FROM php:8.2-cli-alpine AS build
 
 RUN (mkdir -p /flux-namespace-changer && cd /flux-namespace-changer && wget -O - https://github.com/fluxfw/flux-namespace-changer/releases/download/v2022-07-12-1/flux-namespace-changer-v2022-07-12-1-build.tar.gz | tar -xz --strip-components=1)
 
-RUN (mkdir -p /build/flux-mail-rest-api/libs/flux-autoload-api && cd /build/flux-mail-rest-api/libs/flux-autoload-api && wget -O - https://github.com/fluxfw/flux-autoload-api/releases/download/v2022-07-12-1/flux-autoload-api-v2022-07-12-1-build.tar.gz | tar -xz --strip-components=1 && /flux-namespace-changer/bin/change-namespace.php . FluxAutoloadApi FluxMailRestApi\\Libs\\FluxAutoloadApi)
+RUN (mkdir -p /build/flux-mail-rest-api/libs/flux-autoload-api && cd /build/flux-mail-rest-api/libs/flux-autoload-api && wget -O - https://github.com/fluxfw/flux-autoload-api/releases/download/v2022-12-12-1/flux-autoload-api-v2022-12-12-1-build.tar.gz | tar -xz --strip-components=1 && /flux-namespace-changer/bin/change-namespace.php . FluxAutoloadApi FluxMailRestApi\\Libs\\FluxAutoloadApi)
 
-RUN (mkdir -p /build/flux-mail-rest-api/libs/flux-mail-api && cd /build/flux-mail-rest-api/libs/flux-mail-api && wget -O - https://github.com/fluxfw/flux-mail-api/releases/download/v2022-07-12-1/flux-mail-api-v2022-07-12-1-build.tar.gz | tar -xz --strip-components=1 && /flux-namespace-changer/bin/change-namespace.php . FluxMailApi FluxMailRestApi\\Libs\\FluxMailApi)
+RUN (mkdir -p /build/flux-mail-rest-api/libs/flux-mail-api && cd /build/flux-mail-rest-api/libs/flux-mail-api && wget -O - https://github.com/fluxfw/flux-mail-api/releases/download/v2022-12-12-1/flux-mail-api-v2022-12-12-1-build.tar.gz | tar -xz --strip-components=1 && /flux-namespace-changer/bin/change-namespace.php . FluxMailApi FluxMailRestApi\\Libs\\FluxMailApi)
 
-RUN (mkdir -p /build/flux-mail-rest-api/libs/flux-rest-api && cd /build/flux-mail-rest-api/libs/flux-rest-api && wget -O - https://github.com/fluxfw/flux-rest-api/releases/download/v2022-07-12-1/flux-rest-api-v2022-07-12-1-build.tar.gz | tar -xz --strip-components=1 && /flux-namespace-changer/bin/change-namespace.php . FluxRestApi FluxMailRestApi\\Libs\\FluxRestApi)
+RUN (mkdir -p /build/flux-mail-rest-api/libs/flux-rest-api && cd /build/flux-mail-rest-api/libs/flux-rest-api && wget -O - https://github.com/fluxfw/flux-rest-api/releases/download/v2022-12-12-1/flux-rest-api-v2022-12-12-1-build.tar.gz | tar -xz --strip-components=1 && /flux-namespace-changer/bin/change-namespace.php . FluxRestApi FluxMailRestApi\\Libs\\FluxRestApi)
 
 COPY . /build/flux-mail-rest-api
 
-FROM php:8.1-cli-alpine
-
-LABEL org.opencontainers.image.source="https://github.com/fluxfw/flux-mail-rest-api"
+FROM php:8.2-cli-alpine
 
 RUN apk add --no-cache imap-dev libstdc++ && \
     apk add --no-cache --virtual .build-deps $PHPIZE_DEPS openssl-dev && \
