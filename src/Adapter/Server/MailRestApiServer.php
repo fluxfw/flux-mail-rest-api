@@ -2,10 +2,10 @@
 
 namespace FluxMailRestApi\Adapter\Server;
 
-use FluxMailRestApi\Libs\FluxMailApi\Adapter\Api\MailApi;
-use FluxMailRestApi\Libs\FluxRestApi\Adapter\Api\RestApi;
-use FluxMailRestApi\Libs\FluxRestApi\Adapter\Route\Collector\RouteCollector;
-use FluxMailRestApi\Libs\FluxRestApi\Adapter\Server\SwooleServerConfigDto;
+use FluxMailApi\Adapter\Api\MailApi;
+use FluxRestApi\Adapter\Api\RestApi;
+use FluxRestApi\Adapter\Route\Collector\RouteCollector;
+use FluxRestApi\Adapter\Server\SwooleServerConfigDto;
 
 class MailRestApiServer
 {

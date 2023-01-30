@@ -2,7 +2,7 @@
 
 namespace FluxMailRestApi\Adapter\Server;
 
-use FluxMailRestApi\Libs\FluxMailApi\Adapter\Api\MailApiConfigDto;
+use FluxMailApi\Adapter\Api\MailApiConfigDto;
 
 class MailRestApiServerConfigDto
 {
