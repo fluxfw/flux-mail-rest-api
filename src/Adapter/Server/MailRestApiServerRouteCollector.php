@@ -2,10 +2,10 @@
 
 namespace FluxMailRestApi\Adapter\Server;
 
+use FluxMailApi\Adapter\Api\MailApi;
 use FluxMailRestApi\Adapter\Route\FetchRoute;
 use FluxMailRestApi\Adapter\Route\SendRoute;
-use FluxMailRestApi\Libs\FluxMailApi\Adapter\Api\MailApi;
-use FluxMailRestApi\Libs\FluxRestApi\Adapter\Route\Collector\RouteCollector;
+use FluxRestApi\Adapter\Route\Collector\RouteCollector;
 
 class MailRestApiServerRouteCollector implements RouteCollector
 {

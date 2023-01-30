@@ -2,17 +2,17 @@
 
 namespace FluxMailRestApi\Adapter\Route;
 
-use FluxMailRestApi\Libs\FluxMailApi\Adapter\Api\MailApi;
-use FluxMailRestApi\Libs\FluxMailApi\Adapter\Mail\MailDto;
-use FluxMailRestApi\Libs\FluxRestApi\Adapter\Body\JsonBodyDto;
-use FluxMailRestApi\Libs\FluxRestApi\Adapter\Body\Type\DefaultBodyType;
-use FluxMailRestApi\Libs\FluxRestApi\Adapter\Method\DefaultMethod;
-use FluxMailRestApi\Libs\FluxRestApi\Adapter\Method\Method;
-use FluxMailRestApi\Libs\FluxRestApi\Adapter\Route\Documentation\RouteDocumentationDto;
-use FluxMailRestApi\Libs\FluxRestApi\Adapter\Route\Documentation\RouteResponseDocumentationDto;
-use FluxMailRestApi\Libs\FluxRestApi\Adapter\Route\Route;
-use FluxMailRestApi\Libs\FluxRestApi\Adapter\Server\ServerRequestDto;
-use FluxMailRestApi\Libs\FluxRestApi\Adapter\Server\ServerResponseDto;
+use FluxMailApi\Adapter\Api\MailApi;
+use FluxMailApi\Adapter\Mail\MailDto;
+use FluxRestApi\Adapter\Body\JsonBodyDto;
+use FluxRestApi\Adapter\Body\Type\DefaultBodyType;
+use FluxRestApi\Adapter\Method\DefaultMethod;
+use FluxRestApi\Adapter\Method\Method;
+use FluxRestApi\Adapter\Route\Documentation\RouteDocumentationDto;
+use FluxRestApi\Adapter\Route\Documentation\RouteResponseDocumentationDto;
+use FluxRestApi\Adapter\Route\Route;
+use FluxRestApi\Adapter\Server\ServerRequestDto;
+use FluxRestApi\Adapter\Server\ServerResponseDto;
 
 class FetchRoute implements Route
 {
