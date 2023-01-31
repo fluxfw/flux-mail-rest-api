@@ -20,7 +20,7 @@ default:
 build:
     stage: build
     script:
-        - docker build . --pull --build-arg COMMIT_SHA=$CI_COMMIT_SHA -t $CI_REGISTRY_IMAGE:$DOCKER_IMAGE_TAG
+        - docker build . --pull -t $CI_REGISTRY_IMAGE:$DOCKER_IMAGE_TAG
         - docker push $CI_REGISTRY_IMAGE:$DOCKER_IMAGE_TAG
     only:
         - branches

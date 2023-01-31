@@ -1,4 +1,5 @@
 *
+!bin/install-libraries.sh
 !bin/server.php
 !src
 !src/**

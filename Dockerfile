@@ -2,15 +2,12 @@ FROM php:8.2-cli-alpine AS build
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN (mkdir -p /build/flux-mail-rest-api/libs/php-imap && cd /build/flux-mail-rest-api/libs/php-imap && composer require php-imap/php-imap:5.0.1 --ignore-platform-reqs)
+COPY bin/install-libraries.sh /build/flux-mail-rest-api/libs/flux-mail-rest-api/bin/install-libraries.sh
+RUN /build/flux-mail-rest-api/libs/flux-mail-rest-api/bin/install-libraries.sh
 
-RUN (mkdir -p /build/flux-mail-rest-api/libs/PHPMailer && cd /build/flux-mail-rest-api/libs/PHPMailer && composer require phpmailer/phpmailer:v6.7.1 --ignore-platform-reqs)
+RUN ln -s libs/flux-mail-rest-api/bin /build/flux-mail-rest-api/bin
 
-RUN (mkdir -p /build/flux-mail-rest-api/libs/flux-mail-api && cd /build/flux-mail-rest-api/libs/flux-mail-api && wget -O - https://github.com/fluxfw/flux-mail-api/archive/refs/tags/v2023-01-30-1.tar.gz | tar -xz --strip-components=1)
-
-RUN (mkdir -p /build/flux-mail-rest-api/libs/flux-rest-api && cd /build/flux-mail-rest-api/libs/flux-rest-api && wget -O - https://github.com/fluxfw/flux-rest-api/archive/refs/tags/v2023-01-30-1.tar.gz | tar -xz --strip-components=1)
-
-COPY . /build/flux-mail-rest-api
+COPY . /build/flux-mail-rest-api/libs/flux-mail-rest-api
 
 FROM php:8.2-cli-alpine
 
@@ -30,6 +27,3 @@ EXPOSE 9501
 ENTRYPOINT ["/flux-mail-rest-api/bin/server.php"]
 
 COPY --from=build /build /
-
-ARG COMMIT_SHA
-LABEL org.opencontainers.image.revision="$COMMIT_SHA"
