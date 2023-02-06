@@ -2,13 +2,13 @@
 
 namespace FluxMailRestApi\Adapter\Server;
 
-use FluxMailApi\Adapter\Api\MailApiConfigDto;
+use FluxMailRestApi\Adapter\Api\MailRestApiConfigDto;
 
 class MailRestApiServerConfigDto
 {
 
     private function __construct(
-        public readonly MailApiConfigDto $mail_api_config,
+        public readonly MailRestApiConfigDto $mail_rest_api_config,
         public readonly ?string $https_cert,
         public readonly ?string $https_key,
         public readonly string $listen,
@@ -19,14 +19,14 @@ class MailRestApiServerConfigDto
 
 
     public static function new(
-        MailApiConfigDto $mail_api_config,
+        MailRestApiConfigDto $mail_rest_api_config,
         ?string $https_cert = null,
         ?string $https_key = null,
         ?string $listen = null,
         ?int $port = null
     ) : static {
         return new static(
-            $mail_api_config,
+            $mail_rest_api_config,
             $https_cert,
             $https_key,
             $listen ?? "0.0.0.0",
@@ -38,7 +38,7 @@ class MailRestApiServerConfigDto
     public static function newFromEnv() : static
     {
         return static::new(
-            MailApiConfigDto::newFromEnv(),
+            MailRestApiConfigDto::newFromEnv(),
             $_ENV["FLUX_MAIL_REST_API_SERVER_HTTPS_CERT"] ?? null,
             $_ENV["FLUX_MAIL_REST_API_SERVER_HTTPS_KEY"] ?? null,
             $_ENV["FLUX_MAIL_REST_API_SERVER_LISTEN"] ?? null,

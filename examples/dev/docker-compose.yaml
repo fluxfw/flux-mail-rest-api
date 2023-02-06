@@ -7,17 +7,17 @@ services:
         depends_on:
             - smtp
         environment:
-            - FLUX_MAIL_API_MAIL_HOST=...
-            - FLUX_MAIL_API_MAIL_PORT=993
-            - FLUX_MAIL_API_MAIL_TYPE=imap
-            - FLUX_MAIL_API_MAIL_USER_NAME_FILE=/run/secrets/imap_user
-            - FLUX_MAIL_API_MAIL_PASSWORD_FILE=/run/secrets/imap_password
-            - FLUX_MAIL_API_MAIL_ENCRYPTION_TYPE=tls-auto
-            - FLUX_MAIL_API_MAIL_MARK_AS_READ=false
-            - FLUX_MAIL_API_SMTP_HOST=smtp
-            - FLUX_MAIL_API_SMTP_PORT=1025
-            - FLUX_MAIL_API_SMTP_FROM=from@test.local
-            - FLUX_MAIL_API_SMTP_FROM_NAME=Test From User
+            - FLUX_MAIL_REST_API_MAIL_HOST=...
+            - FLUX_MAIL_REST_API_MAIL_PORT=993
+            - FLUX_MAIL_REST_API_MAIL_TYPE=imap
+            - FLUX_MAIL_REST_API_MAIL_USER_NAME_FILE=/run/secrets/imap_user
+            - FLUX_MAIL_REST_API_MAIL_PASSWORD_FILE=/run/secrets/imap_password
+            - FLUX_MAIL_REST_API_MAIL_ENCRYPTION_TYPE=tls-auto
+            - FLUX_MAIL_REST_API_MAIL_MARK_AS_READ=false
+            - FLUX_MAIL_REST_API_SMTP_HOST=smtp
+            - FLUX_MAIL_REST_API_SMTP_PORT=1025
+            - FLUX_MAIL_REST_API_SMTP_FROM=from@test.local
+            - FLUX_MAIL_REST_API_SMTP_FROM_NAME=Test From User
         image: fluxfw/flux-mail-rest-api:latest
         ports:
             - [%host_ip%:]9501:9501
