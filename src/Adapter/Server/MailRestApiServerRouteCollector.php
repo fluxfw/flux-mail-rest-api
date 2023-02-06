@@ -2,7 +2,7 @@
 
 namespace FluxMailRestApi\Adapter\Server;
 
-use FluxMailApi\Adapter\Api\MailApi;
+use FluxMailRestApi\Adapter\Api\MailRestApi;
 use FluxMailRestApi\Adapter\Route\FetchRoute;
 use FluxMailRestApi\Adapter\Route\SendRoute;
 use FluxRestApi\Adapter\Route\Collector\RouteCollector;
@@ -11,17 +11,17 @@ class MailRestApiServerRouteCollector implements RouteCollector
 {
 
     private function __construct(
-        private readonly MailApi $mail_api
+        private readonly MailRestApi $mail_rest_api
     ) {
 
     }
 
 
     public static function new(
-        MailApi $mail_api
+        MailRestApi $mail_rest_api
     ) : static {
         return new static(
-            $mail_api
+            $mail_rest_api
         );
     }
 
@@ -30,10 +30,10 @@ class MailRestApiServerRouteCollector implements RouteCollector
     {
         return [
             FetchRoute::new(
-                $this->mail_api
+                $this->mail_rest_api
             ),
             SendRoute::new(
-                $this->mail_api
+                $this->mail_rest_api
             )
         ];
     }

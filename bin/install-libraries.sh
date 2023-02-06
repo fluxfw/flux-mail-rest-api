@@ -22,8 +22,6 @@ installLibrary() {
 
 checkAlreadyInstalled
 
-installLibrary flux-mail-api https://github.com/fluxfw/flux-mail-api/archive/refs/tags/v2023-01-30-1.tar.gz
-
 installLibrary flux-rest-api https://github.com/fluxfw/flux-rest-api/archive/refs/tags/v2023-01-30-1.tar.gz
 
 installComposerLibrary php-imap php-imap/php-imap:5.0.1

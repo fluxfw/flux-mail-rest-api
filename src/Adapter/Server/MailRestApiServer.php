@@ -2,7 +2,7 @@
 
 namespace FluxMailRestApi\Adapter\Server;
 
-use FluxMailApi\Adapter\Api\MailApi;
+use FluxMailRestApi\Adapter\Api\MailRestApi;
 use FluxRestApi\Adapter\Api\RestApi;
 use FluxRestApi\Adapter\Route\Collector\RouteCollector;
 use FluxRestApi\Adapter\Server\SwooleServerConfigDto;
@@ -27,8 +27,8 @@ class MailRestApiServer
         return new static(
             RestApi::new(),
             MailRestApiServerRouteCollector::new(
-                MailApi::new(
-                    $mail_rest_api_server_config->mail_api_config
+                MailRestApi::new(
+                    $mail_rest_api_server_config->mail_rest_api_config
                 )
             ),
             SwooleServerConfigDto::new(

@@ -2,8 +2,8 @@
 
 namespace FluxMailRestApi\Adapter\Route;
 
-use FluxMailApi\Adapter\Api\MailApi;
-use FluxMailApi\Adapter\Mail\MailDto;
+use FluxMailRestApi\Adapter\Api\MailRestApi;
+use FluxMailRestApi\Adapter\Mail\MailDto;
 use FluxRestApi\Adapter\Body\JsonBodyDto;
 use FluxRestApi\Adapter\Body\Type\DefaultBodyType;
 use FluxRestApi\Adapter\Method\DefaultMethod;
@@ -18,17 +18,17 @@ class FetchRoute implements Route
 {
 
     private function __construct(
-        private readonly MailApi $mail_api
+        private readonly MailRestApi $mail_rest_api
     ) {
 
     }
 
 
     public static function new(
-        MailApi $mail_api
+        MailRestApi $mail_rest_api
     ) : static {
         return new static(
-            $mail_api
+            $mail_rest_api
         );
     }
 
@@ -71,7 +71,7 @@ class FetchRoute implements Route
     {
         return ServerResponseDto::new(
             JsonBodyDto::new(
-                $this->mail_api->fetch()
+                $this->mail_rest_api->fetch()
             )
         );
     }

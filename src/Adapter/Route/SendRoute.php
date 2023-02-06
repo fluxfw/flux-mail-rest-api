@@ -2,11 +2,11 @@
 
 namespace FluxMailRestApi\Adapter\Route;
 
-use FluxMailApi\Adapter\Address\AddressDto;
-use FluxMailApi\Adapter\Api\MailApi;
-use FluxMailApi\Adapter\Attachment\AttachmentDataEncoding;
-use FluxMailApi\Adapter\Attachment\AttachmentDto;
-use FluxMailApi\Adapter\Mail\MailDto;
+use FluxMailRestApi\Adapter\Address\AddressDto;
+use FluxMailRestApi\Adapter\Api\MailRestApi;
+use FluxMailRestApi\Adapter\Attachment\AttachmentDataEncoding;
+use FluxMailRestApi\Adapter\Attachment\AttachmentDto;
+use FluxMailRestApi\Adapter\Mail\MailDto;
 use FluxRestApi\Adapter\Body\JsonBodyDto;
 use FluxRestApi\Adapter\Body\TextBodyDto;
 use FluxRestApi\Adapter\Body\Type\DefaultBodyType;
@@ -24,17 +24,17 @@ class SendRoute implements Route
 {
 
     private function __construct(
-        private readonly MailApi $mail_api
+        private readonly MailRestApi $mail_rest_api
     ) {
 
     }
 
 
     public static function new(
-        MailApi $mail_api
+        MailRestApi $mail_rest_api
     ) : static {
         return new static(
-            $mail_api
+            $mail_rest_api
         );
     }
 
@@ -91,7 +91,7 @@ class SendRoute implements Route
             );
         }
 
-        $this->mail_api->send(
+        $this->mail_rest_api->send(
             MailDto::new(
                 $request->parsed_body->data->subject,
                 $request->parsed_body->data->body_html,
