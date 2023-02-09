@@ -7,7 +7,6 @@
 !src/**
 !.dockerignore
 !.gitignore
-!.gitlab-ci.yml
 !autoload.php
 !CHANGELOG.md
 !Dockerfile
